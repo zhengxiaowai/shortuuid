@@ -61,17 +61,13 @@ func (su *ShortUUID) Decode(str string) uuid.UUID {
 	return u
 }
 
-func (su *ShortUUID) GetUUID(name string, padLength int) (string, error) {
+func (su *ShortUUID) GetUUID(name string, padLength int) string {
 	u := new(uuid.UUID)
 	name = strings.ToLower(name)
 
 	if name == "" {
-		uuidV4, err := uuid.NewV4()
-		if err != nil {
-			return "", err
-		} else {
-			u = &uuidV4
-		}
+		uuidV4 := uuid.NewV4()
+		u = &uuidV4
 	} else if strings.HasPrefix(name, "http://") || strings.HasPrefix(name, "https://") {
 		uuidV5 := uuid.NewV5(uuid.NamespaceURL, name)
 		u = &uuidV5
@@ -80,11 +76,11 @@ func (su *ShortUUID) GetUUID(name string, padLength int) (string, error) {
 		u = &uuidV5
 	}
 
-	return su.Encode(u.String(), padLength), nil
+	return su.Encode(u.String(), padLength)
 }
 
 func (su *ShortUUID) GetUUIDWithNameSpace(name string) string {
-	uuidStr, _ := su.GetUUID(name, su.GetLength())
+	uuidStr := su.GetUUID(name, su.GetLength())
 	return uuidStr
 
 }

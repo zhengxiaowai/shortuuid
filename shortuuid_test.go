@@ -106,10 +106,7 @@ func TestShortUUID_SetAlphabet(t *testing.T) {
 	}
 
 	for i := 1; i <= 100; i++ {
-		u, err := uuid.NewV4()
-		if err != nil {
-			t.Errorf("test SetAlphabet create uuid v4 fail, error = %s", err)
-		}
+		u := uuid.NewV4()
 
 		uuidStr := u.String()
 		encodeUUID := su1.Encode(uuidStr, 0)
@@ -124,10 +121,7 @@ func TestShortUUID_SetAlphabet(t *testing.T) {
 func TestShortUUID_Padding(t *testing.T) {
 	su := NewShortUUID()
 
-	RandomUID, err := uuid.NewV4()
-	if err != nil {
-		t.Fatalf("uuid.NewV4 call err, error = %v", err)
-	}
+	RandomUID := uuid.NewV4()
 
 	zeroBytes := []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 	smallestUID, err := uuid.FromBytes(zeroBytes)
@@ -145,10 +139,7 @@ func TestShortUUID_Padding(t *testing.T) {
 func TestShortUUID_Padding_Decode(t *testing.T) {
 	su := NewShortUUID()
 
-	RandomUID, err := uuid.NewV4()
-	if err != nil {
-		t.Fatalf("uuid.NewV4 call err, error = %v", err)
-	}
+	RandomUID := uuid.NewV4()
 
 	zeroBytes := []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 	smallestUID, err := uuid.FromBytes(zeroBytes)
@@ -174,10 +165,7 @@ func TestShortUUID_Padding_Consistency(t *testing.T) {
 	uidLengths := make(map[int]int)
 
 	for i := 0; i < total; i++ {
-		RandomUID, err := uuid.NewV4()
-		if err != nil {
-			t.Fatalf("uuid.NewV4 call err, error = %v", err)
-		}
+		RandomUID := uuid.NewV4()
 
 		encodedRandom := su.Encode(RandomUID.String(), 0)
 		uidLengths[len(encodedRandom)] += 1
